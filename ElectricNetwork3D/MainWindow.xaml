@@ -1,0 +1,102 @@
+﻿<Window x:Class="ElectricNetwork3D.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ElectricNetwork3D"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="600"
+        MouseLeftButtonDown="ViewPort_MouseLeftButtonDown"
+        MouseLeftButtonUp="ViewPort_MouseLeftButtonUp"
+        MouseMove="ViewPort_MouseMove"
+        MouseWheel="ViewPort_MouseWheel">
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button x:Name="ActivityButton" Content="Show Active Network" Click="ActivityButton_OnClick"/>
+                <Button x:Name="SwitchButton" Content="Show Switch Status" Click="SwitchButton_OnClick"/>
+                <Button x:Name="NetworkResistance" Content="Show Network Resistance" Click="NetworkResistance_OnClick"/>
+                <Button x:Name="ResetButton" Content="Reset" Click="ResetButton_OnClick"/>
+                <Separator></Separator>
+                <Label>Turn off parts of network: </Label>
+                <CheckBox Content="Steel" x:Name="SteelCheck" Checked="SteelCheck_OnChecked" Unchecked="SteelCheck_OnUnchecked"></CheckBox>
+                <CheckBox Content="Ascr" x:Name="AscrCheck" Checked="AscrCheck_OnChecked" Unchecked="AscrCheck_OnUnchecked"></CheckBox>
+                <CheckBox Content="Copper" x:Name="CopperCheck" Checked="CopperCheck_OnChecked" Unchecked="CopperCheck_OnUnchecked"></CheckBox>
+                <CheckBox Content="Other" x:Name="OtherCheck" Checked="OtherCheck_OnChecked" Unchecked="OtherCheck_OnUnchecked"></CheckBox>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid>
+            <Viewport3D ClipToBounds="True" x:Name="ViewportLand">
+                <Viewport3D.Camera>
+                    <PerspectiveCamera x:Name="Camera" Position="0,-0.2,2" LookDirection="0,0,-1" UpDirection="0,1,0"
+                                       FieldOfView="120" />
+                </Viewport3D.Camera>
+
+
+                <Viewport3D.Children>
+                    <ModelVisual3D>
+                        <ModelVisual3D>
+                            <ModelVisual3D.Content>
+                                <AmbientLight></AmbientLight>
+                            </ModelVisual3D.Content>
+
+                        </ModelVisual3D>
+                        <ModelVisual3D.Content>
+                            <Model3DGroup x:Name="GlobalScene">
+                                <GeometryModel3D x:Name="Map">
+                                    <GeometryModel3D.Material>
+                                        <DiffuseMaterial>
+                                            <DiffuseMaterial.Brush>
+                                                <ImageBrush x:Name="MapBrush" />
+                                            </DiffuseMaterial.Brush>
+                                        </DiffuseMaterial>
+                                    </GeometryModel3D.Material>
+                                    <GeometryModel3D.Geometry>
+                                        <MeshGeometry3D Positions="1,1,0 -1,1,0 -1,-1,0 1,-1,0"
+                                                        TriangleIndices="0 1 2 0 2 3"
+                                                        TextureCoordinates="1,0 0,0 0,1 1,1" />
+                                    </GeometryModel3D.Geometry>
+                                </GeometryModel3D>
+
+                                <Model3DGroup x:Name="ElectricScene">
+
+                                </Model3DGroup>
+
+                                <GeometryModel3D x:Name="MapBottom">
+                                    <GeometryModel3D.Geometry>
+                                        <MeshGeometry3D Positions="1,1,0 -1,1,0 -1,-1,0 1,-1,0"
+                                                        TriangleIndices="3,2,0 2,1,0" />
+                                    </GeometryModel3D.Geometry>
+                                    <GeometryModel3D.Material>
+                                        <DiffuseMaterial Brush="Black" />
+                                    </GeometryModel3D.Material>
+                                </GeometryModel3D>
+
+
+                                <Model3DGroup.Transform>
+                                    <Transform3DGroup>
+                                        <TranslateTransform3D x:Name="Translate" OffsetX="0" OffsetY="0" OffsetZ="0" />
+                                        <ScaleTransform3D x:Name="Scale" ScaleX="1" ScaleY="1" ScaleZ="1" />
+                                        <RotateTransform3D x:Name="RotateX" CenterX="0" CenterY="0" CenterZ="0">
+                                            <RotateTransform3D.Rotation>
+                                                <AxisAngleRotation3D x:Name="AngleRotationX" Angle="-60" Axis="1,0,0" />
+                                            </RotateTransform3D.Rotation>
+                                        </RotateTransform3D>
+                                        <RotateTransform3D x:Name="RotateY" CenterX="0" CenterY="0" CenterZ="0">
+                                            <RotateTransform3D.Rotation>
+                                                <AxisAngleRotation3D x:Name="AngleRotationY" Angle="0" Axis="0,1,0" />
+                                            </RotateTransform3D.Rotation>
+                                        </RotateTransform3D>
+                                    </Transform3DGroup>
+                                </Model3DGroup.Transform>
+                            </Model3DGroup>
+                        </ModelVisual3D.Content>
+                    </ModelVisual3D>
+                </Viewport3D.Children>
+
+
+            </Viewport3D>
+
+        </Grid>
+    </DockPanel>
+</Window>
